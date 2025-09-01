@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Poema Caída</title>
-  <style>
-    body {
-      background: white;   /* Fondo blanco */
-      color: red;          /* Texto rojo */
-      font-family: monospace;
-      white-space: pre;
-      font-size: 18px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<meta charset="UTF-8">
+<title>Poema Caída Escalable</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* evita scroll */
+  }
 
-    .poema {
-      animation: lluvia 2.5s infinite ease-in-out;
-    }
+  .poema {
+    color: red;
+    font-family: monospace;
+    white-space: pre;
+    text-align: center;
+    font-size: calc(1vw + 1vh); /* escala según la pantalla */
+    line-height: 1.2;
+    animation: lluvia 2.5s infinite ease-in-out;
+    max-height: 90vh; /* para que no se salga verticalmente */
+  }
 
-    @keyframes lluvia {
-      0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-      25%  { transform: translate(-2px, 3px) rotate(-1deg); opacity: 0.95; }
-      50%  { transform: translate(2px, 6px) rotate(1deg); opacity: 0.9; }
-      75%  { transform: translate(-1px, 9px) rotate(-1deg); opacity: 0.95; }
-      100% { transform: translate(0, 12px) rotate(0deg); opacity: 1; }
-    }
-  </style>
+  @keyframes lluvia {
+    0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+    25%  { transform: translate(-1px, 2px) rotate(-0.5deg); opacity: 0.95; }
+    50%  { transform: translate(1px, 4px) rotate(0.5deg); opacity: 0.9; }
+    75%  { transform: translate(-1px, 6px) rotate(-0.5deg); opacity: 0.95; }
+    100% { transform: translate(0, 8px) rotate(0deg); opacity: 1; }
+  }
+</style>
 </head>
 <body>
-  <div class="poema">
+<div class="poema">
                             toqué
                         el
                     pavimento
@@ -112,6 +119,8 @@ no existía
 yo,
                      VOS,
                   la mano
-  </div>
+</div>
 </body>
 </html>
+
+
