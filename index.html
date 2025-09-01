@@ -138,7 +138,7 @@ yo,
 <script>
 const totalBloques = 5;
 let bloqueActual = 0;
-const duracionBloque = 6000; // 6 segundos por bloque
+const tiempoPorLinea = 1100; // 1.1 segundos por línea
 
 function mostrarBloque(index) {
   for(let i=0;i<totalBloques;i++){
@@ -147,6 +147,16 @@ function mostrarBloque(index) {
   const bloque = document.getElementById(`bloque${index}`);
   bloque.style.display = "flex";
   ajustarFuente(bloque);
+
+  // Calcular duración según cantidad de líneas
+  const lineas = bloque.textContent.split('\n').length;
+  const duracion = lineas * tiempoPorLinea;
+
+  // Cambiar al siguiente bloque después de la duración calculada
+  setTimeout(() => {
+    bloqueActual = (bloqueActual + 1) % totalBloques;
+    mostrarBloque(bloqueActual);
+  }, duracion);
 }
 
 // Ajusta el font-size para que el bloque quepa en pantalla
@@ -159,14 +169,8 @@ function ajustarFuente(bloque){
   }
 }
 
-// Mostrar primer bloque
+// Iniciar mostrando el primer bloque
 mostrarBloque(bloqueActual);
-
-// Cambiar automáticamente los bloques en bucle
-setInterval(() => {
-  bloqueActual = (bloqueActual + 1) % totalBloques;
-  mostrarBloque(bloqueActual);
-}, duracionBloque);
 
 // Ajustar tamaño si se redimensiona la ventana
 window.addEventListener('resize', () => mostrarBloque(bloqueActual));
