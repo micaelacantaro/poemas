@@ -138,21 +138,23 @@ yo,
 <script>
 const totalBloques = 5;
 let bloqueActual = 0;
-const tiempoPorLinea = 1100; // 1.1 segundos por línea
+const tiempoPorPalabra = 400; // milisegundos por palabra
 
 function mostrarBloque(index) {
-  for(let i=0;i<totalBloques;i++){
+  // Oculta todos los bloques
+  for (let i = 0; i < totalBloques; i++) {
     document.getElementById(`bloque${i}`).style.display = "none";
   }
+
   const bloque = document.getElementById(`bloque${index}`);
   bloque.style.display = "flex";
   ajustarFuente(bloque);
 
-  // Calcular duración según cantidad de líneas
-  const lineas = bloque.textContent.split('\n').length;
-  const duracion = lineas * tiempoPorLinea;
+  // Calcular duración según cantidad de palabras
+  const palabras = bloque.textContent.trim().split(/\s+/).length;
+  const duracion = palabras * tiempoPorPalabra;
 
-  // Cambiar al siguiente bloque después de la duración calculada
+  // Pasar al siguiente bloque después de la duración calculada
   setTimeout(() => {
     bloqueActual = (bloqueActual + 1) % totalBloques;
     mostrarBloque(bloqueActual);
@@ -160,7 +162,7 @@ function mostrarBloque(index) {
 }
 
 // Ajusta el font-size para que el bloque quepa en pantalla
-function ajustarFuente(bloque){
+function ajustarFuente(bloque) {
   let fontSize = 50; // tamaño inicial
   bloque.style.fontSize = fontSize + 'px';
   while ((bloque.scrollHeight > window.innerHeight || bloque.scrollWidth > window.innerWidth) && fontSize > 5) {
@@ -178,3 +180,7 @@ window.addEventListener('resize', () => mostrarBloque(bloqueActual));
 
 </body>
 </html>
+
+</body>
+</html>
+
