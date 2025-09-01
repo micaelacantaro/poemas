@@ -13,18 +13,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* evita scroll */
+    overflow: hidden;
   }
 
   .poema {
     color: red;
     font-family: monospace;
-    white-space: pre;
-    text-align: center;
-    font-size: calc(1vw + 1vh); /* escala según la pantalla */
+    white-space: pre; /* mantiene los espacios originales */
+    text-align: left;
     line-height: 1.2;
     animation: lluvia 2.5s infinite ease-in-out;
-    max-height: 90vh; /* para que no se salga verticalmente */
   }
 
   @keyframes lluvia {
@@ -37,7 +35,7 @@
 </style>
 </head>
 <body>
-<div class="poema">
+<div class="poema" id="poema">
                             toqué
                         el
                     pavimento
@@ -120,7 +118,22 @@ yo,
                      VOS,
                   la mano
 </div>
+
+<script>
+function ajustarFuente() {
+  const poema = document.getElementById('poema');
+  let fontSize = 50; // tamaño inicial
+  poema.style.fontSize = fontSize + 'px';
+  
+  while ((poema.scrollHeight > window.innerHeight || poema.scrollWidth > window.innerWidth) && fontSize > 5) {
+    fontSize -= 1;
+    poema.style.fontSize = fontSize + 'px';
+  }
+}
+
+// Ajusta al cargar y al redimensionar la ventana
+window.addEventListener('load', ajustarFuente);
+window.addEventListener('resize', ajustarFuente);
+</script>
 </body>
 </html>
-
-
