@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Poema Caída Escalable</title>
+<title>Poema Caída en Bloques</title>
 <style>
   html, body {
     margin: 0;
@@ -14,14 +14,20 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    font-family: monospace;
   }
 
-  .poema {
+  .bloque {
     color: red;
-    font-family: monospace;
-    white-space: pre; /* mantiene los espacios originales */
+    white-space: pre;
     text-align: left;
     line-height: 1.2;
+    font-size: 2.5vw; /* tamaño inicial, se ajustará con JS */
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     animation: lluvia 2.5s infinite ease-in-out;
   }
 
@@ -32,10 +38,23 @@
     75%  { transform: translate(-1px, 6px) rotate(-0.5deg); opacity: 0.95; }
     100% { transform: translate(0, 8px) rotate(0deg); opacity: 1; }
   }
+
+  #siguiente {
+    position: absolute;
+    bottom: 20px;
+    font-size: 18px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
-<div class="poema" id="poema">
+
+<div id="contenedor">
+  <div class="bloque" id="bloque0">
                             toqué
                         el
                     pavimento
@@ -48,7 +67,9 @@
               soltaste
           la
       mano
+  </div>
 
+  <div class="bloque" id="bloque1" style="display:none">
 VOS,
                        que
                      me
@@ -65,7 +86,9 @@ yo,
                pares
          me dolía
               la panza
+  </div>
 
+  <div class="bloque" id="bloque2" style="display:none">
 sentí
                      el
                   sabor
@@ -85,7 +108,9 @@ y
    agarrame
         de
            nuevo
+  </div>
 
+  <div class="bloque" id="bloque3" style="display:none">
 haceme
                girar
 
@@ -99,7 +124,9 @@ la mente
                      nublada
                   por
                      el mareo
+  </div>
 
+  <div class="bloque" id="bloque4" style="display:none">
 los ojos
                     cerrados
 
@@ -117,23 +144,23 @@ no existía
 yo,
                      VOS,
                   la mano
+  </div>
 </div>
 
-<script>
-function ajustarFuente() {
-  const poema = document.getElementById('poema');
-  let fontSize = 50; // tamaño inicial
-  poema.style.fontSize = fontSize + 'px';
-  
-  while ((poema.scrollHeight > window.innerHeight || poema.scrollWidth > window.innerWidth) && fontSize > 5) {
-    fontSize -= 1;
-    poema.style.fontSize = fontSize + 'px';
-  }
-}
+<button id="siguiente">Siguiente Bloque</button>
 
-// Ajusta al cargar y al redimensionar la ventana
-window.addEventListener('load', ajustarFuente);
-window.addEventListener('resize', ajustarFuente);
+<script>
+let bloqueActual = 0;
+const totalBloques = 5;
+
+document.getElementById("siguiente").addEventListener("click", () => {
+  document.getElementById(`bloque${bloqueActual}`).style.display = "none";
+  bloqueActual = (bloqueActual + 1) % totalBloques;
+  document.getElementById(`bloque${bloqueActual}`).style.display = "flex";
+});
 </script>
+
+</body>
+</html>
 </body>
 </html>
