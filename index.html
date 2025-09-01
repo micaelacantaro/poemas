@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Poema Caída en Bloques</title>
+<title>Poema Caída Bloques Automático</title>
 <style>
   html, body {
     margin: 0;
@@ -19,13 +19,12 @@
 
   .bloque {
     color: red;
-    white-space: pre;
+    white-space: pre; /* mantiene los espacios originales */
     text-align: left;
     line-height: 1.2;
-    font-size: 2.5vw; /* tamaño inicial, se ajustará con JS */
     width: 90%;
     height: 100%;
-    display: flex;
+    display: none; /* se mostrará solo el bloque activo */
     justify-content: center;
     align-items: center;
     animation: lluvia 2.5s infinite ease-in-out;
@@ -37,17 +36,6 @@
     50%  { transform: translate(1px, 4px) rotate(0.5deg); opacity: 0.9; }
     75%  { transform: translate(-1px, 6px) rotate(-0.5deg); opacity: 0.95; }
     100% { transform: translate(0, 8px) rotate(0deg); opacity: 1; }
-  }
-
-  #siguiente {
-    position: absolute;
-    bottom: 20px;
-    font-size: 18px;
-    background: red;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
   }
 </style>
 </head>
@@ -69,7 +57,7 @@
       mano
   </div>
 
-  <div class="bloque" id="bloque1" style="display:none">
+  <div class="bloque" id="bloque1">
 VOS,
                        que
                      me
@@ -88,7 +76,7 @@ yo,
               la panza
   </div>
 
-  <div class="bloque" id="bloque2" style="display:none">
+  <div class="bloque" id="bloque2">
 sentí
                      el
                   sabor
@@ -110,7 +98,7 @@ y
            nuevo
   </div>
 
-  <div class="bloque" id="bloque3" style="display:none">
+  <div class="bloque" id="bloque3">
 haceme
                girar
 
@@ -126,7 +114,7 @@ la mente
                      el mareo
   </div>
 
-  <div class="bloque" id="bloque4" style="display:none">
+  <div class="bloque" id="bloque4">
 los ojos
                     cerrados
 
@@ -147,20 +135,42 @@ yo,
   </div>
 </div>
 
-<button id="siguiente">Siguiente Bloque</button>
-
 <script>
-let bloqueActual = 0;
 const totalBloques = 5;
+let bloqueActual = 0;
+const duracionBloque = 6000; // 6 segundos por bloque
 
-document.getElementById("siguiente").addEventListener("click", () => {
-  document.getElementById(`bloque${bloqueActual}`).style.display = "none";
+function mostrarBloque(index) {
+  for(let i=0;i<totalBloques;i++){
+    document.getElementById(`bloque${i}`).style.display = "none";
+  }
+  const bloque = document.getElementById(`bloque${index}`);
+  bloque.style.display = "flex";
+  ajustarFuente(bloque);
+}
+
+// Ajusta el font-size para que el bloque quepa en pantalla
+function ajustarFuente(bloque){
+  let fontSize = 50; // tamaño inicial
+  bloque.style.fontSize = fontSize + 'px';
+  while ((bloque.scrollHeight > window.innerHeight || bloque.scrollWidth > window.innerWidth) && fontSize > 5) {
+    fontSize -= 1;
+    bloque.style.fontSize = fontSize + 'px';
+  }
+}
+
+// Mostrar primer bloque
+mostrarBloque(bloqueActual);
+
+// Cambiar automáticamente los bloques en bucle
+setInterval(() => {
   bloqueActual = (bloqueActual + 1) % totalBloques;
-  document.getElementById(`bloque${bloqueActual}`).style.display = "flex";
-});
+  mostrarBloque(bloqueActual);
+}, duracionBloque);
+
+// Ajustar tamaño si se redimensiona la ventana
+window.addEventListener('resize', () => mostrarBloque(bloqueActual));
 </script>
 
-</body>
-</html>
 </body>
 </html>
